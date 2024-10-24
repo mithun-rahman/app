@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  dlib:
+    build:
+      context: .
+      dockerfile: /Users/pathaoltd/go/src/app
+    volumes:
+      - dlib_data:/usr/local/lib
+    container_name: dlib_service
+
+  go-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.go
+    volumes:
+      - dlib_data:/usr/local/lib
+      - ./models:/app/models
+      - ./images:/app/images
+    depends_on:
+      - dlib
+    container_name: go_face_app
+    environment:
+      - LD_LIBRARY_PATH=/usr/local/lib
+    command: ["./go-face-app"]
+
+volumes:
+  dlib_data:

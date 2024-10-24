@@ -22,7 +22,7 @@ type PostgresStore struct {
 func NewPostgresStore() (*PostgresStore, error) {
 	dbHost := "localhost"
 	dbPort := 5432
-	dbName := "my_app"
+	dbName := "cardify"
 	dbUser := "postgres"
 	dbPassword := "1234"
 	dbSSLMode := "disable"
@@ -76,7 +76,7 @@ func (s *PostgresStore) Init() error {
 }
 
 func (s *PostgresStore) createAccountTable() error {
-	err := s.db.AutoMigrate(&Account{})
+	err := s.db.AutoMigrate(&CardApplication{})
 	if err == nil {
 		log.Println("account table has been created")
 	}
@@ -84,9 +84,10 @@ func (s *PostgresStore) createAccountTable() error {
 }
 
 func (s *PostgresStore) dropAccountTable() error {
-	err := s.db.Migrator().DropTable(&Account{})
+	err := s.db.Migrator().DropTable(&TwoFa{})
 	if err == nil {
 		log.Println("account table has been deleted")
 	}
 	return err
 }
+
