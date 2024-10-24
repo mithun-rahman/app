@@ -1,0 +1,9 @@
+name: CI
+on: push
+jobs:
+  run_code_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: mysql
+        run:
+          sudo /etc/init.d/mysql start
